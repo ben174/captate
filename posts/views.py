@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from posts.models import Post
 
@@ -14,3 +14,11 @@ class PostView(ListView):
         # RFC 1123 date format
         response['Last-Modified'] = last_post.created_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
         return response
+
+class PostDetailView(DetailView):
+
+    queryset = Post.objects.all()
+
+    def get_object(self):
+        object = super(PostDetailView, self).get_object()
+        return object
