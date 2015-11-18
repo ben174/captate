@@ -24,8 +24,12 @@ class Post(models.Model):
     imgur_id = models.CharField(max_length=50)
 
     @property
+    def image_url(self):
+        return "http://i.imgur.com/{}.jpg".format(self.imgur_id)
+
+    @property
     def caption(self):
-        return Caption.objects.get(post=self).order_by('-vote_count').first()
+        return Caption.objects.filter(post=self).order_by('-vote_count').first()
 
     def __str__(self):
         return self.imgur_id
